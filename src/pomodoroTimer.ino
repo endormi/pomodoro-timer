@@ -2,6 +2,8 @@
 
 Pomodoro timer to keep track of Work and Rest.
 
+Inspired by https://www.hackster.io/hugonator/pomodoro-timer-with-an-arduino-and-an-lcd-screen-3d469e (Hugo Blanc)
+
 */
 
 #include <LiquidCrystal.h>
@@ -13,8 +15,8 @@ const int work = 25;
 const int rest = 5;
 
 char tl[32];
-signed short mins, secs, types;
-signed short i = 0;
+short int mins, secs;
+short int i = 0;
 
 void setup() {
   lcd.begin(16, 2);
@@ -23,10 +25,11 @@ void setup() {
 
 void loop() {
   lcd.setCursor(0, 1);
-  sprintf(tl, "%0.2d mins %0.2d secs", mins, secs);
+  sprintf(tl, "%2d mins %2d secs", mins, secs);
   lcd.print(tl);
 
   delay(1000);
+
   secs++;
 
   if (secs == 60) {
@@ -34,10 +37,10 @@ void loop() {
     mins ++;
   }
 
-  if ((mins == work) && (i == 0)) {
+  if (mins == work && i == 0) {
     mins = 0;
     i = 1;
-  } else if ((mins == rest) && (i == 1)) {
+  } else if (mins == rest && i == 1) {
     mins = 0;
     i = 0;
     }
